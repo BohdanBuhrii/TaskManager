@@ -12,7 +12,8 @@ namespace TaskManager.Models
         public int Id { get; set; }
         public string Content { get; set; }
         public DateTime PublicationDate { get; set; }
-
-        public User Publisher;
+        public bool IsDone { get; set; }
+        public User Publisher { get; set; }
+        public Group Group { get; set; }
     }
 }

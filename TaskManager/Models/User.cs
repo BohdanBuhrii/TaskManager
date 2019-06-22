@@ -11,5 +11,6 @@ namespace TaskManager.Models
         public string Email { get; set; }
         public string HashPassword { get; set; }
         public List<Group> Groups { get; set; }
+        public List<Task> Tasks { get; set; }
     }
 }
