@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Data.Entity;
 using System.Linq;
 using System.Text;
+using TaskManager.Context;
 using TaskManager.Models;
 
 namespace TaskManager.Repository
@@ -14,6 +15,11 @@ namespace TaskManager.Repository
         private Repository<Group> _groupsRepo;
         private Repository<Task> _tasksRepo;
         private bool disposed = false;
+
+        public UnitOfWork()
+        {
+            context = new TaskManagerContext();
+        }
 
         public Repository<User> UsersRepo { get {
                 if (_usersRepo == null) _usersRepo = new Repository<User>(context);
