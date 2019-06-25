@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace TaskManager.BusinessLogic
 {
-    public static class TaskManager
+    public class TaskManager
     {
         
     }

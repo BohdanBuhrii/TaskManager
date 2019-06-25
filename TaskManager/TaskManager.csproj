@@ -127,6 +127,10 @@
     <Compile Include="Migrations\201906221452532_FirstMigration.Designer.cs">
       <DependentUpon>201906221452532_FirstMigration.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201906251030020_FromEFCoreToEF6.cs" />
+    <Compile Include="Migrations\201906251030020_FromEFCoreToEF6.Designer.cs">
+      <DependentUpon>201906251030020_FromEFCoreToEF6.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\Group.cs" />
     <Compile Include="Models\Task.cs" />
@@ -135,6 +139,9 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Abstract\IRepository.cs" />
+    <Compile Include="Repository\Concrete\GroupsRepo.cs" />
+    <Compile Include="Repository\Concrete\TasksRepo.cs" />
+    <Compile Include="Repository\Concrete\UsersRepo.cs" />
     <Compile Include="Repository\Repository.cs" />
     <Compile Include="Repository\UnitOfWork.cs" />
   </ItemGroup>
@@ -149,6 +156,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201906221452532_FirstMigration.resx">
       <DependentUpon>201906221452532_FirstMigration.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201906251030020_FromEFCoreToEF6.resx">
+      <DependentUpon>201906251030020_FromEFCoreToEF6.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

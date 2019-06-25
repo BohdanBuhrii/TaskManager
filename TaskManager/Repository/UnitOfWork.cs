@@ -5,15 +5,19 @@ using System.Linq;
 using System.Text;
 using TaskManager.Context;
 using TaskManager.Models;
+using TaskManager.Repository.Concrete;
 
 namespace TaskManager.Repository
 {
     public class UnitOfWork : IDisposable
     {
         private readonly DbContext context;
-        private Repository<User> _usersRepo;
-        private Repository<Group> _groupsRepo;
-        private Repository<Task> _tasksRepo;
+        //private Repository<User> _usersRepo;
+        //private Repository<Group> _groupsRepo;
+        //private Repository<Task> _tasksRepo;
+        private UsersRepo _usersRepo;
+        private GroupsRepo _groupsRepo;
+        private TasksRepo _tasksRepo;
         private bool disposed = false;
 
         public UnitOfWork()
@@ -21,16 +25,16 @@ namespace TaskManager.Repository
             context = new TaskManagerContext();
         }
 
-        public Repository<User> UsersRepo { get {
-                if (_usersRepo == null) _usersRepo = new Repository<User>(context);
+        public UsersRepo UsersRepo { get {
+                if (_usersRepo == null) _usersRepo = new UsersRepo(context);//Repository<User>(context);
                 return _usersRepo; } }
 
-        public Repository<Group> GroupsRepo { get {
-                if (_groupsRepo == null) _groupsRepo = new Repository<Group>(context);
+        public GroupsRepo GroupsRepo { get {
+                if (_groupsRepo == null) _groupsRepo = new GroupsRepo(context); //Repository<Group>(context);
                 return _groupsRepo; } }
 
-        public Repository<Task> TasksRepo { get {
-                if (_tasksRepo == null) _tasksRepo = new Repository<Task>(context);
+        public TasksRepo TasksRepo { get {
+                if (_tasksRepo == null) _tasksRepo = new TasksRepo(context);//Repository<Task>(context);
                 return _tasksRepo; } }
 
         public void SaveChanges()

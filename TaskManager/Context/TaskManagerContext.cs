@@ -17,7 +17,7 @@ namespace TaskManager.Context
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Group> Groups { get; set; }
 
-        protected override void OnModelCreating(DbModelBuilder modelBuilder)//DbModelBuilder
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
             #region User
             modelBuilder.Entity<User>()
@@ -71,6 +71,16 @@ namespace TaskManager.Context
                 .IsRequired();
 
             modelBuilder.Entity<Group>()
+                .HasMany(e => e.Users)
+                .WithMany(e => e.Groups)
+                .Map(ug =>
+                {
+                    ug.MapLeftKey("GroupId");
+                    ug.MapRightKey("UserId");
+                    ug.ToTable("UserGroup");
+                });
+
+            modelBuilder.Entity<Group>()
                 .HasMany(e => e.Tasks)
                 .WithRequired(e => e.Group);
 
@@ -83,6 +93,12 @@ namespace TaskManager.Context
                 .HasMaxLength(500)
                 .IsUnicode(false)
                 .IsRequired();
+
+            //modelBuilder.Entity<Task>()
+                //.Property(e =>e.Group)
+                
+
+
 
             modelBuilder.Entity<Task>()
                 .Property(e => e.PublicationDate);
