@@ -10,7 +10,7 @@ namespace TaskManager.Models
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public List<User> Users { get; set; }
-        public List<Task> Tasks { get; set; }
+        public ICollection<User> Users { get; set; }
+        public ICollection<Task> Tasks { get; set; }
     }
 }

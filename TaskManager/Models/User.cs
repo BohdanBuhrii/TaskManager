@@ -10,7 +10,7 @@ namespace TaskManager.Models
         public string Name { get; set; }
         public string Email { get; set; }
         public string HashPassword { get; set; }
-        public List<Group> Groups { get; set; }
-        public List<Task> Tasks { get; set; }
+        public ICollection<Group> Groups { get; set; }
+        public ICollection<Task> Tasks { get; set; }
     }
 }

@@ -15,11 +15,15 @@ namespace TaskManager
         {
             using (UnitOfWork db = new UnitOfWork())
             {
-                var groups = new Group[] { new Group { Title = "Family" }, new Group { Title = "Lv-420.Net" } };
+                var groups = new Group[] { new Group { Title = "Family" },
+                                           new Group { Title = "Lv-420.Net" } };
                 db.GroupsRepo.AddRange(groups);
                 
-                var users= new User[] { new User { Email = "bohdan@gmail.com", Name = "Bohdan", HashPassword="1" } };
+                var users = new User[] { new User { Email = "bohdan@gmail.com", Name = "Bohdan", HashPassword="1" },
+                                        new User { Name="Mom", Email="Mom@gmail.com", HashPassword="1"}};
+                db.UsersRepo.AddRange(users);
 
+                //var tasks = new Task[] { new Task { Content = "buy bread", Group =  } };
 
                 db.SaveChanges();
             } 
@@ -31,12 +35,15 @@ namespace TaskManager
             using (UnitOfWork db = new UnitOfWork())
             {
                 //var a=db.GroupsRepo.GetAll();
-                //--db.TasksRepo.Add(new Task { Content="test task", Group=db.GroupsRepo.Get(e=>e.Id==1).First(), Publisher= db.UsersRepo.Get(e => e.Name == "Bohdan").First() });
+                db.TasksRepo.Add(new Task {
+                    Content ="test task", Group=db.GroupsRepo.Get(e=>e.Id==1).First(),
+                    Publisher = db.UsersRepo.Get(e => e.Name == "Bohdan").First() });
                 //User u=db.UsersRepo.Get(e => e.Name=="bohdan").FirstOrDefault();
-                //u.Name = "Bohdan";
-                //db.UsersRepo.Add(new User { Name="Mom", Email="Mom@gmail.com", HashPassword="1"});
+                
 
-                //db.SaveChanges();
+                db.SaveChanges();
+                //ICollection<User> a = new List<User>();
+               
                 ConsoleMenu.Menu menu = new ConsoleMenu.Menu(db.UsersRepo.Get(e => e.Name == "Bohdan").First());
                 menu.Init();
             }

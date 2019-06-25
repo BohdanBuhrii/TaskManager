@@ -139,6 +139,7 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Repository\Abstract\IRepository.cs" />
+    <Compile Include="Repository\Abstract\IUnitOfWork.cs" />
     <Compile Include="Repository\Concrete\GroupsRepo.cs" />
     <Compile Include="Repository\Concrete\TasksRepo.cs" />
     <Compile Include="Repository\Concrete\UsersRepo.cs" />

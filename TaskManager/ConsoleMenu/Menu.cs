@@ -44,7 +44,9 @@ namespace TaskManager.ConsoleMenu
                 int i = 1;
                 // todo add validation if user has groups
                 User u1=db.UsersRepo.Get(u => u.Name == user.Name).First();
-                List<Group> groups = db.GroupsRepo.Get(e => e.).ToList();
+                List<Group> groups = db.GroupsRepo.Get(e => e.Id==1 || e.Id==2).ToList();
+
+                //List<Group> groups = db.GroupsRepo.Get(e => e.)).ToList();
                 foreach (Group group in groups)
                 {
                     ShowGroup(group);  Console.WriteLine("({0})", i++);
@@ -55,7 +57,7 @@ namespace TaskManager.ConsoleMenu
                 choise = Convert.ToInt32(Console.ReadLine());
 
                 if (choise == 0) break;
-                else if (choise < 0 && choise <= i) ShowGroupTasks(user.Groups[choise - 1]);
+                //else if (choise < 0 && choise <= i) ShowGroupTasks(user.Groups[choise - 1]);
             }
         }
 

@@ -95,13 +95,14 @@ namespace TaskManager.Context
                 .IsRequired();
 
             //modelBuilder.Entity<Task>()
-                //.Property(e =>e.Group)
-                
+            //.Property(e =>e.Group)
+
 
 
 
             modelBuilder.Entity<Task>()
                 .Property(e => e.PublicationDate);
+                //.HasColumnType("datatime");
                 
             //modelBuilder.
                         //modelBuilder.Entity<Task>()
