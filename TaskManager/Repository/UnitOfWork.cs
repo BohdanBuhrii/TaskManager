@@ -1,45 +1,53 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Data.Entity;
-using System.Linq;
-using System.Text;
 using TaskManager.Context;
-using TaskManager.Models;
+using TaskManager.Repository.Abstract;
+using TaskManager.Repository.Abstract.AbstrctsForConcrete;
 using TaskManager.Repository.Concrete;
 
 namespace TaskManager.Repository
 {
-    public class UnitOfWork : IDisposable
+    public class UnitOfWork : IUnitOfWork, IDisposable
     {
-        private readonly DbContext context;
-        //private Repository<User> _usersRepo;
-        //private Repository<Group> _groupsRepo;
-        //private Repository<Task> _tasksRepo;
+        private bool disposed = false;
         private UsersRepo _usersRepo;
         private GroupsRepo _groupsRepo;
         private TasksRepo _tasksRepo;
-        private bool disposed = false;
+        private readonly DbContext _context;
+        private static readonly UnitOfWork _unitOfWork = new UnitOfWork();
 
-        public UnitOfWork()
+
+        private UnitOfWork()
         {
-            context = new TaskManagerContext();
+            _context = new TaskManagerContext();
         }
 
+
         public UsersRepo UsersRepo { get {
-                if (_usersRepo == null) _usersRepo = new UsersRepo(context);//Repository<User>(context);
+                if (_usersRepo == null) _usersRepo = new UsersRepo(_context);
                 return _usersRepo; } }
 
         public GroupsRepo GroupsRepo { get {
-                if (_groupsRepo == null) _groupsRepo = new GroupsRepo(context); //Repository<Group>(context);
+                if (_groupsRepo == null) _groupsRepo = new GroupsRepo(_context);
                 return _groupsRepo; } }
 
         public TasksRepo TasksRepo { get {
-                if (_tasksRepo == null) _tasksRepo = new TasksRepo(context);//Repository<Task>(context);
+                if (_tasksRepo == null) _tasksRepo = new TasksRepo(_context);
                 return _tasksRepo; } }
 
-        public void SaveChanges()
+
+        protected virtual void Dispose(bool disposing)
         {
-            context.SaveChanges();
+            if (!disposed)
+            {
+                if (disposing)
+                {
+                    _context.Dispose();
+                }
+
+                // Note disposing has been done.
+                disposed = true;
+            }
         }
 
         public void Dispose()
@@ -48,20 +56,17 @@ namespace TaskManager.Repository
             GC.SuppressFinalize(this);
         }
 
-        protected virtual void Dispose(bool disposing)
+        public void SaveChanges()
         {
-            if (!disposed)
-            {
-                if (disposing)
-                {
-                    context.Dispose();
-                }
-
-                // Note disposing has been done.
-                disposed = true;
-            }
+            _context.SaveChanges();
         }
 
+        public static UnitOfWork GetUnit()
+        {
+            return _unitOfWork;
+        }
+
+        
         ~UnitOfWork()
         {
             Dispose(false);
