@@ -10,11 +10,11 @@ namespace TaskManager.Repository
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private bool disposed = false;
-        private UsersRepo _usersRepo;
-        private GroupsRepo _groupsRepo;
-        private TasksRepo _tasksRepo;
+        private IUsersRepo _usersRepo;
+        private IGroupsRepo _groupsRepo;
+        private ITasksRepo _tasksRepo;
         private readonly DbContext _context;
-        private static readonly UnitOfWork _unitOfWork = new UnitOfWork();
+        private static readonly IUnitOfWork _unitOfWork = new UnitOfWork();
 
 
         private UnitOfWork()
@@ -23,15 +23,15 @@ namespace TaskManager.Repository
         }
 
 
-        public UsersRepo UsersRepo { get {
+        public IUsersRepo UsersRepo { get {
                 if (_usersRepo == null) _usersRepo = new UsersRepo(_context);
                 return _usersRepo; } }
 
-        public GroupsRepo GroupsRepo { get {
+        public IGroupsRepo GroupsRepo { get {
                 if (_groupsRepo == null) _groupsRepo = new GroupsRepo(_context);
                 return _groupsRepo; } }
 
-        public TasksRepo TasksRepo { get {
+        public ITasksRepo TasksRepo { get {
                 if (_tasksRepo == null) _tasksRepo = new TasksRepo(_context);
                 return _tasksRepo; } }
 
@@ -61,7 +61,7 @@ namespace TaskManager.Repository
             _context.SaveChanges();
         }
 
-        public static UnitOfWork GetUnit()
+        public static IUnitOfWork GetUnit()
         {
             return _unitOfWork;
         }

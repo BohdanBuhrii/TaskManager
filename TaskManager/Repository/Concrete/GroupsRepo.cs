@@ -4,10 +4,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using TaskManager.Models;
+using TaskManager.Repository.Abstract.AbstrctsForConcrete;
 
 namespace TaskManager.Repository.Concrete
 {
-    public class GroupsRepo : Repository<Group>
+    public class GroupsRepo : Repository<Group>, IGroupsRepo
     {
         public GroupsRepo(DbContext context) : base(context) { }
 

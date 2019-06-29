@@ -4,10 +4,11 @@ using System.Data.Entity;
 using System.Linq;
 using System.Linq.Expressions;
 using TaskManager.Models;
+using TaskManager.Repository.Abstract.AbstrctsForConcrete;
 
 namespace TaskManager.Repository.Concrete
 {
-    public class TasksRepo : Repository<Task>
+    public class TasksRepo : Repository<Task>, ITasksRepo
     {
         public TasksRepo(DbContext context) : base(context) { }
 

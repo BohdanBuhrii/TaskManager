@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace TaskManager.Repository.Abstract
 {
-    interface IRepository<T> where T : class
+    public interface IRepository<T> where T : class
     {
         IEnumerable<T> Get(Expression<Func<T,bool>> predicate);
 
