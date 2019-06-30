@@ -13,7 +13,7 @@ namespace TaskManager
     {
         static void FillData()
         {
-            using (UnitOfWork db = new UnitOfWork())
+            using (UnitOfWork db = UnitOfWork.GetUnit())
             {
                 var groups = new Group[] { new Group { Title = "Family" },
                                            new Group { Title = "Lv-420.Net" } };
@@ -32,22 +32,25 @@ namespace TaskManager
         static void Main(string[] args)
         {
             //FillData();
-            using (UnitOfWork db = new UnitOfWork())
+            using (UnitOfWork db = UnitOfWork.GetUnit())
             {
                 //var a=db.GroupsRepo.GetAll();
-                db.TasksRepo.Add(new Task {
-                    Content ="test task", Group=db.GroupsRepo.Get(e=>e.Id==1).First(),
-                    Publisher = db.UsersRepo.Get(e => e.Name == "Bohdan").First() });
+                //db.TasksRepo.Add(new Task {
+                //    Content ="test task", Group=db.GroupsRepo.Get(e=>e.Id==1).First(),
+                //    Publisher = db.UsersRepo.Get(e => e.Name == "Bohdan").First() });
                 //User u=db.UsersRepo.Get(e => e.Name=="bohdan").FirstOrDefault();
                 
 
-                db.SaveChanges();
-                //ICollection<User> a = new List<User>();
-               
-                ConsoleMenu.Menu menu = new ConsoleMenu.Menu(db.UsersRepo.Get(e => e.Name == "Bohdan").First());
-                menu.Init();
-            }
+                
+                
 
+                ConsoleMenu.Menu menu = new ConsoleMenu.Menu(db.UsersRepo.Get(e => e.Name == "Bohdan").First());
+                //var user = db.UsersRepo.Get(e => e.Name == "Bohdan").First();
+                menu.Init();
+
+                db.SaveChanges();
+                
+            }
         }
     }
 }
