@@ -21,5 +21,10 @@ namespace TaskManager.DAL.Repository.Concrete
         {
             return _entities.Include(e => e.UserGroups).Include(e => e.Tasks).ToList();
         }
+
+        public User GetByEmail(string email)
+        {
+            return this.Get(u=>u.Email==email).FirstOrDefault();
+        }
     }
 }
