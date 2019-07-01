@@ -39,10 +39,10 @@ namespace TaskManager.BL.Services
             {
                 Id = task.Id,
                 Content = task.Content,
-                GroupId = task.Group.Id,
+                GroupTitle = task.Group.Title,
                 IsDone = task.IsDone,
                 PublicationDate = task.PublicationDate,
-                PublisherId = task.Publisher.Id
+                PublisherName = task.Publisher.Name
             };
         }
 
@@ -95,7 +95,7 @@ namespace TaskManager.BL.Services
             return false;
         }
 
-        #region DTOGetters
+        #region Getters
 
         public UserDTO GetUserByEmail(string email)
         {
