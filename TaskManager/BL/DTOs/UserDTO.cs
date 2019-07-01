@@ -9,7 +9,7 @@ namespace TaskManager.BL.DTOs
         public int Id { get; set; }
         public string Name { get; set; }
         public string Email { get; set; }
-        public ICollection<GroupDTO> Groups { get; set; }
-        public ICollection<TaskDTO> Tasks { get; set; }
+        public List<GroupDTO> Groups { get; set; }
+        public List<TaskDTO> Tasks { get; set; }
     }
 }

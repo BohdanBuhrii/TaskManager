@@ -8,7 +8,7 @@ namespace TaskManager.BL.DTOs
     {
         public int Id { get; set; }
         public string Title { get; set; }
-        public ICollection<UserDTO> Users { get; set; }
-        public ICollection<TaskDTO> Tasks { get; set; }
+        public List<UserDTO> Users { get; set; }
+        public List<TaskDTO> Tasks { get; set; }
     }
 }
