@@ -13,8 +13,7 @@ namespace TaskManager.DAL.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            //"Server=(localdb)\\mssqllocaldb;Database=TaskManager;Trusted_Connection=True;");
-            optionsBuilder.UseSqlServer(@"data source=BAOBAB\SQLEXPRESS;initial catalog=TaskManager;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework");
+            optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TaskManager;Trusted_Connection=True;");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -107,8 +106,6 @@ namespace TaskManager.DAL.Context
 
             base.OnModelCreating(modelBuilder);
         }
-
-
     }
 }
 
