@@ -1,6 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
+
 
 namespace TaskManager.BL.DTOs
 {
@@ -10,7 +9,7 @@ namespace TaskManager.BL.DTOs
         public string Content { get; set; }
         public DateTime PublicationDate { get; set; }
         public bool IsDone { get; set; }
-        public UserDTO Publisher { get; set; }
-        public GroupDTO Group { get; set; }
+        public int PublisherId { get; set; }
+        public int GroupId { get; set; }
     }
 }
