@@ -13,7 +13,8 @@ namespace TaskManager.DAL.Context
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
-            optionsBuilder.UseSqlServer(@"data source=BAOBAB\SQLEXPRESS;initial catalog=TaskManager;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework");//"Server=(localdb)\\mssqllocaldb;Database=TaskManager;Trusted_Connection=True;");
+            //"Server=(localdb)\\mssqllocaldb;Database=TaskManager;Trusted_Connection=True;");
+            optionsBuilder.UseSqlServer(@"data source=BAOBAB\SQLEXPRESS;initial catalog=TaskManager;integrated security=True;MultipleActiveResultSets=True;App=EntityFramework");
         }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -85,6 +86,22 @@ namespace TaskManager.DAL.Context
         
             modelBuilder.Entity<Task>()
                 .Property(e => e.PublicationDate);
+
+            #endregion
+
+            #region SeedData
+            
+            //modelBuilder.Entity<User>().HasData(
+            //    new User { Id=1, Name = "Bohdan", Email = "bohdan@gmail.com", HashPassword = "1" },
+            //    new User { Id=2, Name = "Mom", Email = "mom@gmail.com", HashPassword = "1" }
+            //    );
+
+            //modelBuilder.Entity<Group>().HasData(
+            //    new Group { Id=1, Title = "Family" },
+            //    new Group { Id=2, Title = "Lv-420.Net" }
+            //    );
+
+            //modelBuilder.Seed();
 
             #endregion
 
