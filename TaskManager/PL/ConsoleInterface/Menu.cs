@@ -1,9 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
 using TaskManager.BL.DTOs;
 using TaskManager.BL.Services;
 
-namespace TaskManager.PL.ConsoleMenu
+namespace TaskManager.PL.ConsoleInterface
 {
     public class Menu
     {
@@ -15,8 +14,8 @@ namespace TaskManager.PL.ConsoleMenu
         public Menu(UserDTO user)
         {
             this.user = user;
-            //taskManager = new BusinessLogic.TaskManager();
-            db = UnitOfWork.GetUnit();
+            _provider = new TaskManagerProvider();
+            _businessLogic = new TaskManagerBusinessLogic();
         }
 
 
@@ -24,16 +23,18 @@ namespace TaskManager.PL.ConsoleMenu
         {
             Console.WriteLine("__________________________________________________________________________");
         }
-        private void ShowTask(Task task)
+
+        
+        private void ShowTask(TaskDTO task)
         {
-            Console.WriteLine( "{0}   {1}     To group {2}",task.Publisher.Name, task.PublicationDate, task.Group.Title);
+            Console.WriteLine( "{0}   {1}     To group {2}",task.PublisherName, task.PublicationDate, task.GroupTitle);
             Console.WriteLine(task.Content);
             Console.WriteLine(task.IsDone);
         }
 
-        private void ShowGroup(Group group)
+        private void ShowGroup(GroupDTO group)
         {
-            Console.Write("{0}, {1}", group.Title, group.Tasks.Count);
+            Console.Write("{0},     {1} unresolved tasks", group.Title, group.NumberOfUnresolvedTasks);
         }
 
         public void ShowGroups()
@@ -47,9 +48,10 @@ namespace TaskManager.PL.ConsoleMenu
                 Console.WriteLine("Choose ");
                 WriteSeparator();
                 int i = 1;
-                /*
+
+                var groups = _provider.GetGroupsByUser(user);
                 // todo add validation if user has groups
-                foreach (Group group in user.Groups)
+                foreach (GroupDTO group in groups)
                 {
                     ShowGroup(group);  Console.WriteLine("({0})", i++);
                     WriteSeparator();
@@ -61,9 +63,9 @@ namespace TaskManager.PL.ConsoleMenu
                 choise = Convert.ToInt32(Console.ReadLine());
 
                 if (choise == 0) break;
-                else if (0 < choise && choise <= i) ShowGroupTasks(user.Groups.ElementAt(choise-1));
+                else if (0 < choise && choise <= i) ShowGroupTasks(groups[i-1]);
                 WriteSeparator();
-                */
+                
             }
         }
 
@@ -79,8 +81,10 @@ namespace TaskManager.PL.ConsoleMenu
                 WriteSeparator();
                 int i = 1;
 
+                var tasks = _provider.GetTasksByUser(user);
+
                 // todo add validation if user has tasks
-                foreach (Task task in user.Tasks)
+                foreach (TaskDTO task in tasks)
                 {
                     ShowTask(task); Console.WriteLine("({0})", i++);
                     WriteSeparator();
@@ -95,13 +99,15 @@ namespace TaskManager.PL.ConsoleMenu
             }
         }
 
-        public void ShowGroupTasks(Group group)
+        public void ShowGroupTasks(GroupDTO group)
         {
             int choise = 0;
             while (true)
             {
                 int i = 1;
-                foreach (Task task in group.Tasks)
+
+                var tasks = _provider.GetTasksByGroup(group);
+                foreach (TaskDTO task in tasks)
                 {
                     ShowTask(task); Console.WriteLine(i);
                 }
@@ -124,7 +130,7 @@ namespace TaskManager.PL.ConsoleMenu
                 Console.Clear();
                 Console.Write("\nSee my groups (1)\n" +
                               "See my tasks (2)\n" +
-                              //"Log out (3)\n" +
+                              "Log out (3)\n" +
                               "Exit (0)\n");
 
                 choise = Convert.ToInt32(Console.ReadLine());
@@ -137,7 +143,7 @@ namespace TaskManager.PL.ConsoleMenu
                 {
                     ShowUserTasks();
                 }
-                //else if (choise == 3) { }
+                else if (choise == 3) { }
                 
             }
         }
