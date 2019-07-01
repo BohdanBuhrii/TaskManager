@@ -20,4 +20,8 @@
     <Folder Include="PL\" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\Helper\Helper.csproj" />
+  </ItemGroup>
+
 </Project>

@@ -1,21 +1,18 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using TaskManager.DAL.Models;
-using TaskManager.DAL.Repository;
-using TaskManager.DAL.Repository.Abstract;
+using TaskManager.BL.DTOs;
+using TaskManager.BL.Services;
 
-namespace TaskManager.DAL.ConsoleMenu
+namespace TaskManager.PL.ConsoleMenu
 {
     public class Menu
     {
-        //private BusinessLogic.TaskManager taskManager;
-        private readonly int screen;
-        private IUnitOfWork db;
-        private User user;
-        private IEnumerable<User> enumerable;
+        private UserDTO user;
+        private readonly int _screen;
+        private readonly TaskManagerProvider _provider;
+        private readonly TaskManagerBusinessLogic _businessLogic;
 
-        public Menu(User user)
+        public Menu(UserDTO user)
         {
             this.user = user;
             //taskManager = new BusinessLogic.TaskManager();
