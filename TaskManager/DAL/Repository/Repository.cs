@@ -18,12 +18,12 @@ namespace TaskManager.DAL.Repository
 
         public virtual IEnumerable<T> Get(Expression<Func<T, bool>> predicate)
         {
-            return _entities.Where(predicate);
+            return _entities.Where(predicate).AsNoTracking();
         }
 
         public virtual IEnumerable<T> GetAll()
         {
-            return _entities.ToList();
+            return _entities.AsNoTracking().ToList();
         }
 
         public virtual void Add(T entity)
