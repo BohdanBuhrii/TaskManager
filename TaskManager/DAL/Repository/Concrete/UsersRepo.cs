@@ -14,12 +14,12 @@ namespace TaskManager.DAL.Repository.Concrete
 
         public override IEnumerable<User> Get(Expression<Func<User, bool>> predicate)
         {
-            return _entities.AsNoTracking().Where(predicate).Include(e => e.Tasks).Include(e => e.UserGroups).ThenInclude(ug => ug.Group);
+            return _entities.Where(predicate).Include(e => e.Tasks).Include(e => e.UserGroups).ThenInclude(ug => ug.Group).AsNoTracking();
         }
 
         public override IEnumerable<User> GetAll()
         {
-            return _entities.AsNoTracking().Include(e => e.Tasks).Include(e => e.UserGroups).ThenInclude(ug => ug.Group).ToList();
+            return _entities.Include(e => e.Tasks).Include(e => e.UserGroups).ThenInclude(ug => ug.Group).AsNoTracking().ToList();
         }
 
         public User GetByEmail(string email)

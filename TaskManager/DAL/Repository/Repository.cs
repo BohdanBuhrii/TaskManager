@@ -49,7 +49,7 @@ namespace TaskManager.DAL.Repository
 
         public virtual void Update(T entity)
         {
-            throw new NotImplementedException();
+            _entities.Update(entity);
         }
     }
 }
