@@ -16,6 +16,11 @@ namespace TaskManager.DAL.Repository
             _entities = dbContext.Set<T>();
         }
 
+        public T GetByKey(object key)
+        {
+            return _entities.Find(key);
+        }
+
         public virtual IEnumerable<T> Get(Expression<Func<T, bool>> predicate)
         {
             return _entities.Where(predicate).AsNoTracking();
@@ -51,5 +56,7 @@ namespace TaskManager.DAL.Repository
         {
             _entities.Update(entity);
         }
+
+        
     }
 }

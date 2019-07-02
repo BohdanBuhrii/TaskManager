@@ -6,6 +6,8 @@ namespace TaskManager.DAL.Repository.Abstract
 {
     public interface IRepository<T> where T : class
     {
+        T GetByKey(object key);
+
         IEnumerable<T> Get(Expression<Func<T,bool>> predicate);
 
         IEnumerable<T> GetAll();
