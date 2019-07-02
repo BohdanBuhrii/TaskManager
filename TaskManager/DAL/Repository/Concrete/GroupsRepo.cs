@@ -14,12 +14,12 @@ namespace TaskManager.DAL.Repository.Concrete
 
         public override IEnumerable<Group> Get(Expression<Func<Group, bool>> predicate)
         {
-            return _entities.Where(predicate).Include(e => e.Tasks).Include(e => e.UserGroups);
+            return _entities.Where(predicate).Include(e => e.Tasks).Include(e => e.UserGroups).ThenInclude(ug => ug.User);
         }
 
         public override IEnumerable<Group> GetAll()
         {
-            return _entities.Include(e => e.Tasks).Include(e => e.UserGroups).ToList();
+            return _entities.Include(e => e.Tasks).Include(e => e.UserGroups).ThenInclude(ug => ug.User).ToList();
         } 
     }
 }
