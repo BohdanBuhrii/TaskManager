@@ -66,13 +66,14 @@ namespace TaskManager.PL.ConsoleInterface
                     }
                     else
                     {
+                        //todo
                         Console.WriteLine("Uncorrect password");
                     }
                 }
                 else
                 {
                     Console.WriteLine("User with this email not found, press (0) to go to previous page, \npressany any other key try again");
-                    if (Console.Read() == 0)
+                    if (Console.ReadLine() == "0")
                     {
                         Console.Clear();
                         StartPage();

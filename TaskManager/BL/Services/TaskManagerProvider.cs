@@ -57,7 +57,8 @@ namespace TaskManager.BL.Services
         }
 
         #endregion
-
+        
+        #region Getters
         private uint GetNumberOfUnresolvedTasks(Group group)
         {
             uint counter = 0;
@@ -69,34 +70,7 @@ namespace TaskManager.BL.Services
 
             return counter;
         }
-
-        public bool IsEmailExist(string email)
-        {
-            if (_db.UsersRepo.GetByEmail(email) == null)
-            {
-                return false;
-            }
-            else
-            {
-                return true;
-            }
-        }
-
-        public bool IsPasswordValid(string email, string password)
-        {
-            if (IsEmailExist(email))
-            {
-                if (_db.UsersRepo.GetByEmail(email).HashPassword == HashHelper.GetHashStringSHA256(password))
-                {
-                    return true;
-                }
-            }
-
-            return false;
-        }
-
-        #region Getters
-
+        
         public UserDTO GetUserByEmail(string email)
         {
             return ConvertToDTO(_db.UsersRepo.GetByEmail(email));
@@ -106,7 +80,7 @@ namespace TaskManager.BL.Services
         {
             List<GroupDTO> groups = new List<GroupDTO>();
 
-            User userInfo= _db.UsersRepo.Get(u => u.Id == user.Id).GetEnumerator().Current;
+            User userInfo = _db.UsersRepo.Get(u => u.Id == user.Id).GetEnumerator().Current;
             foreach (UserGroup userGroup in userInfo.UserGroups)
             {
                 groups.Add(ConvertToDTO(userGroup.Group));
@@ -133,7 +107,7 @@ namespace TaskManager.BL.Services
         {
             List<TaskDTO> tasks = new List<TaskDTO>();
 
-            Group groupInfo = _db.GroupsRepo.Get(g=>g.Id==group.Id).GetEnumerator().Current;
+            Group groupInfo = _db.GroupsRepo.Get(g => g.Id == group.Id).GetEnumerator().Current;
 
             foreach (Task task in groupInfo.Tasks)
             {
@@ -145,5 +119,70 @@ namespace TaskManager.BL.Services
 
         #endregion
 
+        #region Adders
+
+        public void AddNewUser(UserDTO user, string password)
+        {
+            _db.UsersRepo.Add(new User
+            {
+                Email = user.Email,
+                HashPassword = HashHelper.GetHashStringSHA256(password),
+                Name = user.Name
+            });
+            _db.SaveChanges();
+        }
+
+        public void AddNewGroup(GroupDTO group)
+        {
+            _db.GroupsRepo.Add(new Group
+            {
+                //Id = group.Id,
+                Title = group.Title
+            });
+            _db.SaveChanges();
+        }
+
+        public void AddNewTask(TaskDTO task, UserDTO user, GroupDTO group) //todo
+        {
+            //var gr = _db.GroupsRepo.Get(g => g.Id == group.Id).FirstOrDefault();
+            Task t = new Task
+            {
+                Content = task.Content,
+                //Group = gr,
+                //Id = task.Id,
+                IsDone = task.IsDone,
+                PublicationDate = task.PublicationDate,
+                Publisher = _db.UsersRepo.GetByEmail(user.Email)
+            };
+            _db.TasksRepo.Add(t);
+            _db.SaveChanges();
+        }
+
+        #endregion
+
+        public bool IsEmailExist(string email)
+        {
+            if (_db.UsersRepo.GetByEmail(email) == null)
+            {
+                return false;
+            }
+            else
+            {
+                return true;
+            }
+        }
+
+        public bool IsPasswordValid(string email, string password)
+        {
+            if (IsEmailExist(email))
+            {
+                if (_db.UsersRepo.GetByEmail(email).HashPassword == HashHelper.GetHashStringSHA256(password))
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }        
     }
 }

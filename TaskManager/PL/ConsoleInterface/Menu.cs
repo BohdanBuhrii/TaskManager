@@ -1,20 +1,18 @@
 ﻿using System;
 using TaskManager.BL.DTOs;
 using TaskManager.BL.Services;
+using TaskManager.PL.ConsoleInterface.Abstract;
 
 namespace TaskManager.PL.ConsoleInterface
 {
-    public class Menu
+    public class Menu : ConsoleItem
     {
-        private UserDTO user;
-        private readonly int _screen;
-        private readonly TaskManagerProvider _provider;
+        private UserDTO user;       
         private readonly TaskManagerBusinessLogic _businessLogic;
 
-        public Menu(UserDTO user)
+        public Menu(UserDTO user) : base()
         {
             this.user = user;
-            _provider = new TaskManagerProvider();
             _businessLogic = new TaskManagerBusinessLogic();
         }
 
@@ -122,7 +120,7 @@ namespace TaskManager.PL.ConsoleInterface
 
         
 
-        public void Init()
+        public override void Init()
         {
             int choise = -1;
             while (choise != 0)
