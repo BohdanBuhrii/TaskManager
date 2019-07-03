@@ -95,7 +95,7 @@ namespace TaskManager.PL.ConsoleInterface
                 Console.WriteLine("\nExit (0)");
                 WriteSeparator();
 
-                ReadChoise(1, i);
+                ReadChoise(0, i);
 
                 if (choise == 0)
                 {
