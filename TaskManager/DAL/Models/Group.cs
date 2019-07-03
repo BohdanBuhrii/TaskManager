@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 
 
 namespace TaskManager.DAL.Models
@@ -9,5 +10,10 @@ namespace TaskManager.DAL.Models
         public string Title { get; set; }
         public ICollection<UserGroup> UserGroups { get; set; }
         public ICollection<Task> Tasks { get; set; }
+
+        internal Group Include(Func<object, object> p)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

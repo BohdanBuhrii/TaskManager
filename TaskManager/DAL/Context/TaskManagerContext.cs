@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using System;
 using TaskManager.DAL.Models;
 
 namespace TaskManager.DAL.Context
@@ -10,6 +11,7 @@ namespace TaskManager.DAL.Context
         public DbSet<User> Users { get; set; }
         public DbSet<Task> Tasks { get; set; }
         public DbSet<Group> Groups { get; set; }
+        public DbSet<UserGroup> UserGroups { get; set; }
 
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
@@ -91,8 +93,8 @@ namespace TaskManager.DAL.Context
             #region SeedData
 
             modelBuilder.Entity<User>().HasData(
-                new User { Id = 1, Name = "Bohdan", Email = "bohdan@gmail.com", HashPassword = "1" },
-                new User { Id = 2, Name = "Mom", Email = "mom@gmail.com", HashPassword = "1" }
+                new User { Id = 1, Name = "Bohdan", Email = "bohdan@gmail.com", HashPassword = "10713417811525552252225157107128782559063877117316423416247297319230822211831359175" },
+                new User { Id = 2, Name = "Mom", Email = "mom@gmail.com", HashPassword = "10713417811525552252225157107128782559063877117316423416247297319230822211831359175" }
                 );
 
             modelBuilder.Entity<Group>().HasData(
@@ -100,7 +102,25 @@ namespace TaskManager.DAL.Context
                 new Group { Id = 2, Title = "Lv-420.Net" }
                 );
 
-            //modelBuilder.Seed();
+            modelBuilder.Entity<Task>().HasData(
+                new Task { Id = 1,
+                    Content = "buy bread",
+                    GroupId = 1,
+                    IsDone = false,
+                    PublicationDate = Convert.ToDateTime("03-07-2019"),
+                    PublisherId = 2 },
+                new Task { Id=2,
+                    Content ="do e-learnings",
+                    GroupId =2,
+                    IsDone =false,
+                    PublicationDate= Convert.ToDateTime("03-07-2019"),
+                    PublisherId = 1
+                });
+
+            modelBuilder.Entity<UserGroup>().HasData(
+                new UserGroup { UserId = 1, GroupId = 1 },
+                new UserGroup { UserId = 1, GroupId = 2 },
+                new UserGroup { UserId = 2, GroupId = 1 });
 
             #endregion
 

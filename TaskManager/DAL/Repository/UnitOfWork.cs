@@ -3,7 +3,6 @@ using System;
 using TaskManager.DAL.Context;
 using TaskManager.DAL.Repository.Abstract;
 using TaskManager.DAL.Repository.Abstract.AbstractsForConcrete;
-using TaskManager.DAL.Repository.Abstract.AbstrctsForConcrete;
 using TaskManager.DAL.Repository.Concrete;
 
 namespace TaskManager.DAL.Repository
@@ -52,7 +51,7 @@ namespace TaskManager.DAL.Repository
             }
         }
 
-        public IUserGroupsRepo UserGroupRepo
+        public IUserGroupsRepo UserGroupsRepo
         {
             get
             {

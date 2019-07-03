@@ -4,13 +4,18 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using TaskManager.DAL.Models;
-using TaskManager.DAL.Repository.Abstract.AbstrctsForConcrete;
+using TaskManager.DAL.Repository.Abstract.AbstractsForConcrete;
 
 namespace TaskManager.DAL.Repository.Concrete
 {
     public class UsersRepo : Repository<User>, IUsersRepo
     {
         public UsersRepo(DbContext context) : base(context) { }
+
+        public override User GetByKey(int key)
+        {
+            return _entities.Include(u => u.Tasks).Include(u => u.UserGroups).SingleOrDefault(u => u.Id == key);
+        }
 
         public override IEnumerable<User> Get(Expression<Func<User, bool>> predicate)
         {

@@ -16,7 +16,7 @@ namespace TaskManager.DAL.Repository
             _entities = dbContext.Set<T>();
         }
 
-        public T GetByKey(object key)
+        public virtual T GetByKey(int key)
         {
             return _entities.Find(key);
         }
