@@ -1,6 +1,6 @@
 ﻿using TaskManager.DAL.Models;
 
-namespace TaskManager.DAL.Repository.Abstract.AbstrctsForConcrete
+namespace TaskManager.DAL.Repository.Abstract.AbstractsForConcrete
 {
     public interface IUsersRepo : IRepository<User>
     {
