@@ -25,6 +25,6 @@ namespace TaskManager.DAL.Repository.Concrete
         public override IEnumerable<Group> GetAll()
         {
             return _entities.Include(e => e.Tasks).Include(e => e.UserGroups).ThenInclude(ug => ug.User).AsNoTracking().ToList();
-        } 
+        }
     }
 }

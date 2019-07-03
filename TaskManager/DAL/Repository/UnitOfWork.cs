@@ -17,18 +17,20 @@ namespace TaskManager.DAL.Repository
         private readonly DbContext _context;
         private static readonly IUnitOfWork _unitOfWork = new UnitOfWork();
 
-
         private UnitOfWork()
         {
             _context = new TaskManagerContext();
         }
 
-
         public IUsersRepo UsersRepo
         {
             get
             {
-                if (_usersRepo == null) _usersRepo = new UsersRepo(_context);
+                if (_usersRepo == null)
+                {
+                    _usersRepo = new UsersRepo(_context);
+                }
+
                 return _usersRepo;
             }
         }
@@ -37,7 +39,11 @@ namespace TaskManager.DAL.Repository
         {
             get
             {
-                if (_groupsRepo == null) _groupsRepo = new GroupsRepo(_context);
+                if (_groupsRepo == null)
+                {
+                    _groupsRepo = new GroupsRepo(_context);
+                }
+
                 return _groupsRepo;
             }
         }
@@ -46,7 +52,11 @@ namespace TaskManager.DAL.Repository
         {
             get
             {
-                if (_tasksRepo == null) _tasksRepo = new TasksRepo(_context);
+                if (_tasksRepo == null)
+                {
+                    _tasksRepo = new TasksRepo(_context);
+                }
+
                 return _tasksRepo;
             }
         }
@@ -55,11 +65,14 @@ namespace TaskManager.DAL.Repository
         {
             get
             {
-                if (_userGroupsRepo == null) _userGroupsRepo = new UserGroupsRepo(_context);
+                if (_userGroupsRepo == null)
+                {
+                    _userGroupsRepo = new UserGroupsRepo(_context);
+                }
+
                 return _userGroupsRepo;
             }
         }
-
 
         protected virtual void Dispose(bool disposing)
         {
@@ -91,7 +104,6 @@ namespace TaskManager.DAL.Repository
             return _unitOfWork;
         }
 
-        
         ~UnitOfWork()
         {
             Dispose(false);

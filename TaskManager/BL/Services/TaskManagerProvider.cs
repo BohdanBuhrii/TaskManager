@@ -29,7 +29,7 @@ namespace TaskManager.BL.Services
             {
                 Id = group.Id,
                 Title = group.Title,
-                NumberOfUnresolvedTasks = GetNumberOfUnresolvedTasks(group)
+                NumberOfUnresolvedTasks = GetNumberOfUnresolvedTasks(group),
             };
         }
 
@@ -67,7 +67,10 @@ namespace TaskManager.BL.Services
 
             foreach (Task task in tasks)
             {
-                if (task.IsDone == false) counter += 1;
+                if (task.IsDone == false)
+                {
+                    counter += 1;
+                }
             }
 
             return counter;
@@ -139,7 +142,6 @@ namespace TaskManager.BL.Services
         {
             _db.GroupsRepo.Add(new Group
             {
-                //Id = group.Id,
                 Title = group.Title
             });
             _db.SaveChanges();
@@ -184,6 +186,6 @@ namespace TaskManager.BL.Services
             }
 
             return false;
-        }        
+        }
     }
 }

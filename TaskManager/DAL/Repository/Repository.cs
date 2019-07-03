@@ -51,12 +51,9 @@ namespace TaskManager.DAL.Repository
             _entities.RemoveRange(entities);
         }
 
-
         public virtual void Update(T entity)
         {
             _entities.Update(entity);
         }
-
-        
     }
 }

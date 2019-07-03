@@ -29,7 +29,7 @@ namespace TaskManager.DAL.Repository.Concrete
 
         public User GetByEmail(string email)
         {
-            return this.Get(u=>u.Email==email).FirstOrDefault();
+            return this.Get(u => u.Email == email).FirstOrDefault();
         }
     }
 }

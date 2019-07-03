@@ -1,6 +1,4 @@
-﻿
-
-using Microsoft.EntityFrameworkCore;
+﻿using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,7 +12,6 @@ namespace TaskManager.DAL.Repository.Concrete
     {
         public UserGroupsRepo(DbContext context) : base(context) { }
 
-        
         public override IEnumerable<UserGroup> Get(Expression<Func<UserGroup, bool>> predicate)
         {
             return _entities.Where(predicate).Include(ug => ug.Group).Include(ug => ug.User).AsNoTracking();

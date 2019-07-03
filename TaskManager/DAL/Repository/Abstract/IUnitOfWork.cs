@@ -5,7 +5,6 @@ namespace TaskManager.DAL.Repository.Abstract
 {
     public interface IUnitOfWork : IDisposable
     {
-
         IUsersRepo UsersRepo { get; }
 
         IGroupsRepo GroupsRepo { get; }
@@ -15,6 +14,5 @@ namespace TaskManager.DAL.Repository.Abstract
         IUserGroupsRepo UserGroupsRepo { get; }
 
         void SaveChanges();
-
     }
 }

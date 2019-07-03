@@ -14,7 +14,7 @@ namespace TaskManager.DAL.Repository.Concrete
 
         public override Task GetByKey(int key)
         {
-            return _entities.Include(t => t.Publisher).Include(t => t.Group).SingleOrDefault(t => t.Id==key);
+            return _entities.Include(t => t.Publisher).Include(t => t.Group).SingleOrDefault(t => t.Id == key);
         }
 
         public override IEnumerable<Task> Get(Expression<Func<Task, bool>> predicate)

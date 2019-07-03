@@ -40,6 +40,8 @@ namespace TaskManager.PL.ConsoleInterface.Abstract
             }
         }
 
-        public virtual void Init() { }
+        public virtual void Init()
+        {
+        }
     }
 }
