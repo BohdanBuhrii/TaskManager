@@ -16,7 +16,9 @@ namespace TaskManager
             //    new GroupDTO { Id = 1, Title = "Family" });
             DAL.Repository.Abstract.IUnitOfWork db = DAL.Repository.UnitOfWork.GetUnit();
             //var p=provider.GetUserByEmail("bohdan@gmail.com"); //work
-            
+            var t=db.UsersRepo.GetByKey(1); //!!!!!!!! overload for all repos
+
+            System.Console.WriteLine();
         }
     }
 }
