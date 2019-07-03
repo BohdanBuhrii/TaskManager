@@ -57,20 +57,22 @@ namespace TaskManager.BL.Services
         }
 
         #endregion
-        
+
         #region Getters
         private uint GetNumberOfUnresolvedTasks(Group group)
         {
             uint counter = 0;
 
-            foreach (Task task in group.Tasks)
+            IEnumerable<Task> tasks = _db.TasksRepo.Get(t => t.GroupId == group.Id);
+
+            foreach (Task task in tasks)
             {
                 if (task.IsDone == false) counter += 1;
             }
 
             return counter;
         }
-        
+
         public UserDTO GetUserByEmail(string email)
         {
             return ConvertToDTO(_db.UsersRepo.GetByEmail(email));
@@ -80,7 +82,8 @@ namespace TaskManager.BL.Services
         {
             List<GroupDTO> groups = new List<GroupDTO>();
 
-            User userInfo = _db.UsersRepo.Get(u => u.Id == user.Id).GetEnumerator().Current;
+            User userInfo = _db.UsersRepo.GetByKey(user.Id);
+
             foreach (UserGroup userGroup in userInfo.UserGroups)
             {
                 groups.Add(ConvertToDTO(userGroup.Group));
@@ -91,30 +94,30 @@ namespace TaskManager.BL.Services
 
         public List<TaskDTO> GetTasksByUser(UserDTO user)
         {
-            List<TaskDTO> tasks = new List<TaskDTO>();
+            List<TaskDTO> taskDTOs = new List<TaskDTO>();
 
-            User userInfo = _db.UsersRepo.Get(u => u.Id == user.Id).GetEnumerator().Current;
+            IEnumerable<Task> tasks = _db.TasksRepo.Get(t => t.PublisherId == user.Id);
 
-            foreach (Task task in userInfo.Tasks)
+            foreach (Task task in tasks)
             {
-                tasks.Add(ConvertToDTO(task));
+                taskDTOs.Add(ConvertToDTO(task));
             }
 
-            return tasks;
+            return taskDTOs;
         }
 
         public List<TaskDTO> GetTasksByGroup(GroupDTO group)
         {
-            List<TaskDTO> tasks = new List<TaskDTO>();
+            List<TaskDTO> taskDTOs = new List<TaskDTO>();
 
-            Group groupInfo = _db.GroupsRepo.Get(g => g.Id == group.Id).GetEnumerator().Current;
+            IEnumerable<Task> tasks = _db.TasksRepo.Get(t => t.GroupId == group.Id);
 
-            foreach (Task task in groupInfo.Tasks)
+            foreach (Task task in tasks)
             {
-                tasks.Add(ConvertToDTO(task));
+                taskDTOs.Add(ConvertToDTO(task));
             }
 
-            return tasks;
+            return taskDTOs;
         }
 
         #endregion
@@ -142,17 +145,15 @@ namespace TaskManager.BL.Services
             _db.SaveChanges();
         }
 
-        public void AddNewTask(TaskDTO task, UserDTO user, GroupDTO group) //todo
+        public void AddNewTask(TaskDTO task, UserDTO user, GroupDTO group)
         {
-            //var gr = _db.GroupsRepo.Get(g => g.Id == group.Id).FirstOrDefault();
             Task t = new Task
             {
                 Content = task.Content,
-                //Group = gr,
-                //Id = task.Id,
+                GroupId = group.Id,
                 IsDone = task.IsDone,
                 PublicationDate = task.PublicationDate,
-                Publisher = _db.UsersRepo.GetByEmail(user.Email)
+                PublisherId = user.Id
             };
             _db.TasksRepo.Add(t);
             _db.SaveChanges();

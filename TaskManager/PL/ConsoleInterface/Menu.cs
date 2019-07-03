@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using TaskManager.BL.DTOs;
 using TaskManager.BL.Services;
 using TaskManager.PL.ConsoleInterface.Abstract;
@@ -7,25 +8,23 @@ namespace TaskManager.PL.ConsoleInterface
 {
     public class Menu : ConsoleItem
     {
-        private UserDTO user;       
+        private readonly UserDTO _user;
         private readonly TaskManagerBusinessLogic _businessLogic;
 
         public Menu(UserDTO user) : base()
         {
-            this.user = user;
+            this._user = user;
             _businessLogic = new TaskManagerBusinessLogic();
         }
 
-
-        private void WriteSeparator()//todo argument
+        private void WriteSeparator() // todo argument
         {
-            Console.WriteLine("__________________________________________________________________________");
+            Console.WriteLine("=========================================================");
         }
 
-        
         private void ShowTask(TaskDTO task)
         {
-            Console.WriteLine( "{0}   {1}     To group {2}",task.PublisherName, task.PublicationDate, task.GroupTitle);
+            Console.WriteLine("{0}   {1}     To group {2}", task.PublisherName, task.PublicationDate, task.GroupTitle);
             Console.WriteLine(task.Content);
             Console.WriteLine(task.IsDone);
         }
@@ -37,8 +36,6 @@ namespace TaskManager.PL.ConsoleInterface
 
         public void ShowGroups()
         {
-            int choise=0;
-
             while (true)
             {
                 Console.Clear();
@@ -47,30 +44,36 @@ namespace TaskManager.PL.ConsoleInterface
                 WriteSeparator();
                 int i = 1;
 
-                var groups = _provider.GetGroupsByUser(user);
+                var groups = _provider.GetGroupsByUser(_user);
+
                 // todo add validation if user has groups
                 foreach (GroupDTO group in groups)
                 {
-                    ShowGroup(group);  Console.WriteLine("({0})", i++);
+                    ShowGroup(group);
+                    Console.WriteLine("({0})", i++);
                     WriteSeparator();
                 }
 
                 Console.WriteLine("\nExit (0)");
                 WriteSeparator();
 
-                choise = Convert.ToInt32(Console.ReadLine());
+                ReadChoise(0, i);
 
-                if (choise == 0) break;
-                else if (0 < choise && choise <= i) ShowGroupTasks(groups[i-1]);
+                if (choise == 0)
+                {
+                    break;
+                }
+                else
+                {
+                    ShowGroupTasks(groups[i - 2]);
+                }
+
                 WriteSeparator();
-                
             }
         }
 
         public void ShowUserTasks()
         {
-            int choise = 0;
-
             while (true)
             {
                 Console.Clear();
@@ -79,27 +82,34 @@ namespace TaskManager.PL.ConsoleInterface
                 WriteSeparator();
                 int i = 1;
 
-                var tasks = _provider.GetTasksByUser(user);
+                List<TaskDTO> tasks = _provider.GetTasksByUser(_user);
 
                 // todo add validation if user has tasks
                 foreach (TaskDTO task in tasks)
                 {
-                    ShowTask(task); Console.WriteLine("({0})", i++);
+                    ShowTask(task);
+                    Console.WriteLine("({0})", i++);
                     WriteSeparator();
                 }
 
                 Console.WriteLine("\nExit (0)");
                 WriteSeparator();
 
-                choise = Convert.ToInt32(Console.ReadLine());
+                ReadChoise(1, i);
 
-                if (choise == 0) break;
+                if (choise == 0)
+                {
+                    break;
+                }
+                else
+                {
+                    EditTask(tasks[i - 1]);
+                }
             }
         }
 
         public void ShowGroupTasks(GroupDTO group)
         {
-            int choise = 0;
             while (true)
             {
                 int i = 1;
@@ -107,23 +117,32 @@ namespace TaskManager.PL.ConsoleInterface
                 var tasks = _provider.GetTasksByGroup(group);
                 foreach (TaskDTO task in tasks)
                 {
-                    ShowTask(task); Console.WriteLine(i);
+                    ShowTask(task);
+                    Console.WriteLine(i);
                 }
 
                 Console.WriteLine("\nExit (0)");
 
-                choise = Convert.ToInt32(Console.ReadLine());
+                ReadChoise(0, i);
 
-                if (choise == 0) break;
+                if (choise == 0)
+                {
+                    break;
+                }
+                else
+                {
+                    EditTask(tasks[i - 1]);
+                }
             }
         }
 
-        
+        public void EditTask(TaskDTO task)
+        {
+        }
 
         public override void Init()
         {
-            int choise = -1;
-            while (choise != 0)
+            while (true)
             {
                 Console.Clear();
                 Console.Write("\nSee my groups (1)\n" +
@@ -133,7 +152,11 @@ namespace TaskManager.PL.ConsoleInterface
 
                 choise = Convert.ToInt32(Console.ReadLine());
                 Console.Clear();
-                if (choise == 1)
+                if (choise == 0)
+                {
+                    break;
+                }
+                else if (choise == 1)
                 {
                     ShowGroups();
                 }
@@ -141,8 +164,12 @@ namespace TaskManager.PL.ConsoleInterface
                 {
                     ShowUserTasks();
                 }
-                else if (choise == 3) { }
-                
+                else if (choise == 3)
+                {
+                    Console.Clear();
+                    Authentication authentication = new Authentication();
+                    authentication.Init();
+                }
             }
         }
     }

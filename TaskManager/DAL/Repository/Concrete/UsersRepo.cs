@@ -14,7 +14,7 @@ namespace TaskManager.DAL.Repository.Concrete
 
         public override User GetByKey(int key)
         {
-            return _entities.Include(u => u.Tasks).Include(u => u.UserGroups).SingleOrDefault(u => u.Id == key);
+            return _entities.Include(u => u.Tasks).Include(u => u.UserGroups).ThenInclude(ug => ug.Group).AsNoTracking().SingleOrDefault(u => u.Id == key);
         }
 
         public override IEnumerable<User> Get(Expression<Func<User, bool>> predicate)

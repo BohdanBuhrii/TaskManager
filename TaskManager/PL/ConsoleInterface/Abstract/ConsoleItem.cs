@@ -11,13 +11,12 @@ namespace TaskManager.PL.ConsoleInterface.Abstract
 
         public ConsoleItem()
         {
-            choise = 0;
+            choise = -1;
             _provider = new TaskManagerProvider();
         }
 
-        protected virtual int ReadChoise(int minValue, int maxValue)
+        protected virtual void ReadChoise(int minValue, int maxValue)
         {
-            int choise;
             while (true)
             {
                 try
@@ -32,7 +31,6 @@ namespace TaskManager.PL.ConsoleInterface.Abstract
 
                 if (minValue <= choise && choise <= maxValue)
                 {
-                    return choise;
                 }
                 else
                 {

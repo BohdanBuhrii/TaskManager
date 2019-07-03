@@ -21,8 +21,7 @@ namespace TaskManager.PL.ConsoleInterface
 
                 Console.WriteLine("\nExit          (0)");
 
-                choise = ReadChoise(0, 2);
-
+                ReadChoise(0, 2);
 
                 if (choise == 0)
                 {
@@ -39,7 +38,6 @@ namespace TaskManager.PL.ConsoleInterface
                     Registeration();
                 }
             }
-
         }
 
         public void LogIn()
@@ -48,14 +46,12 @@ namespace TaskManager.PL.ConsoleInterface
             {
                 string email;
                 string password;
-                               
 
                 Console.Write("Email : ");
                 email = Console.ReadLine();
 
                 if (_provider.IsEmailExist(email))
                 {
-                    
                     Console.Write("Password : ");
                     password = Console.ReadLine();
 
@@ -66,7 +62,7 @@ namespace TaskManager.PL.ConsoleInterface
                     }
                     else
                     {
-                        //todo
+                        // todo
                         Console.WriteLine("Uncorrect password");
                     }
                 }
@@ -79,14 +75,14 @@ namespace TaskManager.PL.ConsoleInterface
                         StartPage();
                         break;
                     }
+
                     Console.Clear();
-                }              
+                }
             }
         }
 
         public void Registeration()
         {
-
         }
     }
 }
