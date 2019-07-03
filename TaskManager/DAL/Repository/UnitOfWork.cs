@@ -2,6 +2,7 @@
 using System;
 using TaskManager.DAL.Context;
 using TaskManager.DAL.Repository.Abstract;
+using TaskManager.DAL.Repository.Abstract.AbstractsForConcrete;
 using TaskManager.DAL.Repository.Abstract.AbstrctsForConcrete;
 using TaskManager.DAL.Repository.Concrete;
 
@@ -13,6 +14,7 @@ namespace TaskManager.DAL.Repository
         private IUsersRepo _usersRepo;
         private IGroupsRepo _groupsRepo;
         private ITasksRepo _tasksRepo;
+        private IUserGroupsRepo _userGroupsRepo;
         private readonly DbContext _context;
         private static readonly IUnitOfWork _unitOfWork = new UnitOfWork();
 
@@ -23,17 +25,41 @@ namespace TaskManager.DAL.Repository
         }
 
 
-        public IUsersRepo UsersRepo { get {
+        public IUsersRepo UsersRepo
+        {
+            get
+            {
                 if (_usersRepo == null) _usersRepo = new UsersRepo(_context);
-                return _usersRepo; } }
+                return _usersRepo;
+            }
+        }
 
-        public IGroupsRepo GroupsRepo { get {
+        public IGroupsRepo GroupsRepo
+        {
+            get
+            {
                 if (_groupsRepo == null) _groupsRepo = new GroupsRepo(_context);
-                return _groupsRepo; } }
+                return _groupsRepo;
+            }
+        }
 
-        public ITasksRepo TasksRepo { get {
+        public ITasksRepo TasksRepo
+        {
+            get
+            {
                 if (_tasksRepo == null) _tasksRepo = new TasksRepo(_context);
-                return _tasksRepo; } }
+                return _tasksRepo;
+            }
+        }
+
+        public IUserGroupsRepo UserGroupRepo
+        {
+            get
+            {
+                if (_userGroupsRepo == null) _userGroupsRepo = new UserGroupsRepo(_context);
+                return _userGroupsRepo;
+            }
+        }
 
 
         protected virtual void Dispose(bool disposing)

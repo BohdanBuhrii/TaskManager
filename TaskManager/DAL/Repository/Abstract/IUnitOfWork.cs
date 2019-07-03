@@ -1,5 +1,5 @@
 ﻿using System;
-using TaskManager.DAL.Repository.Abstract.AbstrctsForConcrete;
+using TaskManager.DAL.Repository.Abstract.AbstractsForConcrete;
 
 namespace TaskManager.DAL.Repository.Abstract
 {
@@ -11,6 +11,8 @@ namespace TaskManager.DAL.Repository.Abstract
         IGroupsRepo GroupsRepo { get; }
 
         ITasksRepo TasksRepo { get; }
+
+        IUserGroupsRepo UserGroupsRepo { get; }
 
         void SaveChanges();
 
