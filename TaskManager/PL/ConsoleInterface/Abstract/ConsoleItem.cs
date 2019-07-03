@@ -31,6 +31,7 @@ namespace TaskManager.PL.ConsoleInterface.Abstract
 
                 if (minValue <= choise && choise <= maxValue)
                 {
+                    break;
                 }
                 else
                 {
