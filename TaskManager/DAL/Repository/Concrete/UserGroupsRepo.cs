@@ -12,11 +12,13 @@ namespace TaskManager.DAL.Repository.Concrete
     {
         public UserGroupsRepo(DbContext context) : base(context) { }
 
+        /// <inheritdoc/>
         public override IEnumerable<UserGroup> Get(Expression<Func<UserGroup, bool>> predicate)
         {
             return _entities.Where(predicate).Include(ug => ug.Group).Include(ug => ug.User).AsNoTracking();
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<UserGroup> GetAll()
         {
             return _entities.Include(ug => ug.Group).Include(ug => ug.User).AsNoTracking().ToList();

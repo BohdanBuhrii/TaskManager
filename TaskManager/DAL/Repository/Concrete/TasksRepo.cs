@@ -12,16 +12,19 @@ namespace TaskManager.DAL.Repository.Concrete
     {
         public TasksRepo(DbContext context) : base(context) { }
 
+        /// <inheritdoc/>
         public override Task GetByKey(int key)
         {
             return _entities.Include(t => t.Publisher).Include(t => t.Group).SingleOrDefault(t => t.Id == key);
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<Task> Get(Expression<Func<Task, bool>> predicate)
         {
             return _entities.Where(predicate).Include(e => e.Group).Include(e => e.Publisher).AsNoTracking();
         }
 
+        /// <inheritdoc/>
         public override IEnumerable<Task> GetAll()
         {
             return _entities.Include(e => e.Group).Include(e => e.Publisher).AsNoTracking().ToList();

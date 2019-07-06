@@ -7,6 +7,10 @@ using TaskManager.DAL.Repository.Concrete;
 
 namespace TaskManager.DAL.Repository
 {
+    /// <summary>
+    /// Used to group one or more database operations into a single transaction,
+    /// so that all operations either pass or fail as one.
+    /// </summary>
     public class UnitOfWork : IUnitOfWork, IDisposable
     {
         private bool disposed = false;
@@ -17,11 +21,15 @@ namespace TaskManager.DAL.Repository
         private readonly DbContext _context;
         private static readonly IUnitOfWork _unitOfWork = new UnitOfWork();
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="UnitOfWork"/> class.
+        /// </summary>
         private UnitOfWork()
         {
             _context = new TaskManagerContext();
         }
 
+        /// <inheritdoc/>
         public IUsersRepo UsersRepo
         {
             get
@@ -35,6 +43,7 @@ namespace TaskManager.DAL.Repository
             }
         }
 
+        /// <inheritdoc/>
         public IGroupsRepo GroupsRepo
         {
             get
@@ -48,6 +57,7 @@ namespace TaskManager.DAL.Repository
             }
         }
 
+        /// <inheritdoc/>
         public ITasksRepo TasksRepo
         {
             get
@@ -61,6 +71,7 @@ namespace TaskManager.DAL.Repository
             }
         }
 
+        /// <inheritdoc/>
         public IUserGroupsRepo UserGroupsRepo
         {
             get
@@ -94,16 +105,26 @@ namespace TaskManager.DAL.Repository
             GC.SuppressFinalize(this);
         }
 
+        /// <summary>
+        /// Save all changes made to the database.
+        /// </summary>
         public void SaveChanges()
         {
             _context.SaveChanges();
         }
 
+        /// <summary>
+        /// Gets the UnitOfWork instance.
+        /// </summary>
+        /// <returns> Unit of work. </returns>
         public static IUnitOfWork GetUnit()
         {
             return _unitOfWork;
         }
 
+        /// <summary>
+        /// Finalizes an instance of the <see cref="UnitOfWork"/> class.
+        /// </summary>
         ~UnitOfWork()
         {
             Dispose(false);

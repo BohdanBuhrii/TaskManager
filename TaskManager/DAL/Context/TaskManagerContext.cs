@@ -4,23 +4,46 @@ using TaskManager.DAL.Models;
 
 namespace TaskManager.DAL.Context
 {
+    /// <summary>
+    /// Application context.
+    /// </summary>
     public class TaskManagerContext : DbContext
     {
-        public TaskManagerContext() : base() { }
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TaskManagerContext"/> class.
+        /// </summary>
+        public TaskManagerContext()
+            : base()
+        {
+        }
 
+        /// <summary>
+        /// Gets or sets set of records in table Users.
+        /// </summary>
         public DbSet<User> Users { get; set; }
 
+        /// <summary>
+        /// Gets or sets set of records in table Tasks.
+        /// </summary>
         public DbSet<Task> Tasks { get; set; }
 
+        /// <summary>
+        /// Gets or sets set of records in table Groups.
+        /// </summary>
         public DbSet<Group> Groups { get; set; }
 
+        /// <summary>
+        /// Gets or sets set of records in table UserGroups.
+        /// </summary>
         public DbSet<UserGroup> UserGroups { get; set; }
 
+        /// <inheritdoc/>
         protected override void OnConfiguring(DbContextOptionsBuilder optionsBuilder)
         {
             optionsBuilder.UseSqlServer("Server=(localdb)\\MSSQLLocalDB;Database=TaskManager;Trusted_Connection=True;");
         }
 
+        /// <inheritdoc/>
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             #region User
