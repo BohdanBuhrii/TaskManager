@@ -42,16 +42,24 @@ namespace TaskManager.PL.ConsoleInterface
                 WriteSeparator();
                 Console.WriteLine("Choose ");
                 WriteSeparator();
-                int i = 1;
+                int i = 0;
+                List<GroupDTO> groups = new List<GroupDTO>();
 
-                var groups = _provider.GetGroupsByUser(_user);
-
-                // todo add validation if user has groups
-                foreach (GroupDTO group in groups)
+                try
                 {
-                    ShowGroup(group);
-                    Console.WriteLine("({0})", i++);
-                    WriteSeparator();
+                    groups = _provider.GetGroupsByUser(_user);
+
+                    // todo add validation if user has groups
+                    foreach (GroupDTO group in groups)
+                    {
+                        ShowGroup(group);
+                        Console.WriteLine("({0})", ++i);
+                        WriteSeparator();
+                    }
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine("You have no groups");
                 }
 
                 Console.WriteLine("\nExit (0)");
@@ -66,9 +74,8 @@ namespace TaskManager.PL.ConsoleInterface
                 else
                 {
                     ShowGroupTasks(groups[i - 2]);
+                    break;
                 }
-
-                WriteSeparator();
             }
         }
 
@@ -138,6 +145,22 @@ namespace TaskManager.PL.ConsoleInterface
 
         public void EditTask(TaskDTO task)
         {
+            if (task.IsDone)
+            {
+                Console.WriteLine("This task is done");
+            }
+            else
+            {
+                Console.WriteLine("If you want to mark this task \"done\" press (1), " +
+                    "else press any other key");
+                if (Console.ReadLine() == "1")
+                {
+                    _provider.MarkTaskAsDone(ref task);
+                }
+                Console.Clear();
+            }
+
+            
         }
 
         public override void Init()
@@ -169,6 +192,7 @@ namespace TaskManager.PL.ConsoleInterface
                     Console.Clear();
                     Authentication authentication = new Authentication();
                     authentication.Init();
+                    break;
                 }
             }
         }

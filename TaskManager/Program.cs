@@ -9,6 +9,9 @@ namespace TaskManager
         {
             Authentication authentication = new Authentication();
             authentication.Init();
+
+            //System.Collections.Generic.Stack<string> stack = new System.Collections.Generic.Stack<string>();
+
             //BL.Services.TaskManagerProvider provider = new BL.Services.TaskManagerProvider();
             //provider.AddNewTask( // not work
             //   new TaskDTO { Content = "test task", GroupTitle = "Family", IsDone = false, PublicationDate = System.Convert.ToDateTime("02-07-2019"), PublisherName = "Bohdan" },

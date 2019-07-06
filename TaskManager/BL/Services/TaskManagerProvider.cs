@@ -161,7 +161,24 @@ namespace TaskManager.BL.Services
             _db.SaveChanges();
         }
 
+        public void AddUserToGroup(UserDTO user, GroupDTO group)
+        {
+            _db.UserGroupsRepo.Add(new UserGroup { GroupId = group.Id, UserId = user.Id });
+            _db.SaveChanges();
+        }
+
         #endregion
+
+        public void MarkTaskAsDone(ref TaskDTO taskDTO)
+        {
+            taskDTO.IsDone = true;
+
+            Task task = _db.TasksRepo.GetByKey(taskDTO.Id);
+            task.IsDone = true;
+
+            _db.TasksRepo.Update(task);
+            _db.SaveChanges();
+        }
 
         public bool IsEmailExist(string email)
         {
