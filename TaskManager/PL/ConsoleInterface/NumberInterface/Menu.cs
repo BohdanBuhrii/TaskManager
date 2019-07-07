@@ -155,7 +155,7 @@ namespace TaskManager.PL.ConsoleInterface
                     "else press any other key");
                 if (Console.ReadLine() == "1")
                 {
-                    _provider.MarkTaskAsDone(ref task);
+                    _provider.MarkTaskAsDone(task);
                 }
                 Console.Clear();
             }

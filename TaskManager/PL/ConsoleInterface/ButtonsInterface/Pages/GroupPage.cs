@@ -11,15 +11,20 @@ namespace TaskManager.PL.ConsoleInterface.ButtonsInterface.Pages
         private readonly GroupDTO _group;
         private readonly UserDTO _user;
         private readonly TaskManagerProvider _provider;
+        private readonly TaskManagerBusinessLogic _businessLogic;
 
         public GroupPage(GroupDTO group, UserDTO user)
         {
             _group = group;
             _user = user;
             _provider = new TaskManagerProvider();
-            buttons.Add(new Button { Content = $"Group : {group.Title}\n", ButtonAction = NullAction, AbilityToChange = false });
+            _businessLogic = new TaskManagerBusinessLogic();
 
             _tasks = _provider.GetTasksByGroup(_group);
+            _businessLogic.SortTasks(_tasks);
+
+            buttons.Add(new Button { Content = $"Group : {group.Title}\n", ButtonAction = NullAction, AbilityToChange = false });
+
             string status = string.Empty;
 
             foreach (TaskDTO task in _tasks)
