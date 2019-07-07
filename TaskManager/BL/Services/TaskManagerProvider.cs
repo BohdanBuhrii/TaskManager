@@ -7,15 +7,25 @@ using TaskManager.DAL.Repository.Abstract;
 
 namespace TaskManager.BL.Services
 {
+    /// <summary>
+    /// Used for communication between PL and DAL.
+    /// </summary>
     public class TaskManagerProvider
     {
         private readonly IUnitOfWork _db;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TaskManagerProvider"/> class.
+        /// </summary>
         public TaskManagerProvider()
         {
             _db = UnitOfWork.GetUnit();
         }
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="TaskManagerProvider"/> class.
+        /// </summary>
+        /// <param name="unitOfWork"> Unit of work. </param>
         public TaskManagerProvider(IUnitOfWork unitOfWork)
         {
             _db = unitOfWork;
@@ -76,11 +86,21 @@ namespace TaskManager.BL.Services
             return counter;
         }
 
+        /// <summary>
+        /// Gets user by email.
+        /// </summary>
+        /// <param name="email"> User's email. </param>
+        /// <returns> User. </returns>
         public UserDTO GetUserByEmail(string email)
         {
             return ConvertToDTO(_db.UsersRepo.GetByEmail(email));
         }
 
+        /// <summary>
+        /// Gets groups which user follows.
+        /// </summary>
+        /// <param name="user"> User. </param>
+        /// <returns> Groups, which user follows. </returns>
         public List<GroupDTO> GetGroupsByUser(UserDTO user)
         {
             List<GroupDTO> groups = new List<GroupDTO>();
@@ -95,6 +115,11 @@ namespace TaskManager.BL.Services
             return groups;
         }
 
+        /// <summary>
+        /// Gets tasks, created by user.
+        /// </summary>
+        /// <param name="user"> User. </param>
+        /// <returns> Tasks, created by user. </returns>
         public List<TaskDTO> GetTasksByUser(UserDTO user)
         {
             List<TaskDTO> taskDTOs = new List<TaskDTO>();
@@ -109,6 +134,11 @@ namespace TaskManager.BL.Services
             return taskDTOs;
         }
 
+        /// <summary>
+        /// Gets tasks, created in concrete group.
+        /// </summary>
+        /// <param name="group"> Group. </param>
+        /// <returns> Tasks, created in this group. </returns>
         public List<TaskDTO> GetTasksByGroup(GroupDTO group)
         {
             List<TaskDTO> taskDTOs = new List<TaskDTO>();
@@ -127,6 +157,11 @@ namespace TaskManager.BL.Services
 
         #region Adders
 
+        /// <summary>
+        /// Add new user to the database.
+        /// </summary>
+        /// <param name="user"> User. </param>
+        /// <param name="password"> User's password. </param>
         public void AddNewUser(UserDTO user, string password)
         {
             _db.UsersRepo.Add(new User
@@ -138,6 +173,11 @@ namespace TaskManager.BL.Services
             _db.SaveChanges();
         }
 
+        /// <summary>
+        /// Add new group to the database.
+        /// </summary>
+        /// <param name="group"> Group. </param>
+        /// <param name="user"> User, which will be added to the group. </param>
         public void AddNewGroup(GroupDTO group, UserDTO user)
         {
             _db.GroupsRepo.Add(new Group
@@ -160,6 +200,12 @@ namespace TaskManager.BL.Services
             _db.SaveChanges();
         }
 
+        /// <summary>
+        /// Add new task to the database.
+        /// </summary>
+        /// <param name="task"> Task. </param>
+        /// <param name="user"> Task's publisher. </param>
+        /// <param name="group"> Group, in which task will be published. </param>
         public void AddNewTask(TaskDTO task, UserDTO user, GroupDTO group)
         {
             Task t = new Task
@@ -174,6 +220,11 @@ namespace TaskManager.BL.Services
             _db.SaveChanges();
         }
 
+        /// <summary>
+        /// Add new follower to group.
+        /// </summary>
+        /// <param name="user"> New follower. </param>
+        /// <param name="group"> Group. </param>
         public void AddUserToGroup(UserDTO user, GroupDTO group)
         {
             _db.UserGroupsRepo.Add(new UserGroup { GroupId = group.Id, UserId = user.Id });
@@ -182,12 +233,21 @@ namespace TaskManager.BL.Services
 
         #endregion
 
+        /// <summary>
+        /// Unfollow user from group.
+        /// </summary>
+        /// <param name="user"> User, which following current group.</param>
+        /// <param name="group"> Group. </param>
         public void DeleteUserFromGroup(UserDTO user, GroupDTO group)
         {
             _db.UserGroupsRepo.DeleteRange(_db.UserGroupsRepo.Get(ug => ug.UserId == user.Id && ug.GroupId == group.Id));
             _db.SaveChanges();
         }
 
+        /// <summary>
+        /// Marks task as "done".
+        /// </summary>
+        /// <param name="taskDTO"> Task. </param>
         public void MarkTaskAsDone(TaskDTO taskDTO)
         {
             taskDTO.IsDone = true;
@@ -199,6 +259,11 @@ namespace TaskManager.BL.Services
             _db.SaveChanges();
         }
 
+        /// <summary>
+        /// Check if email exist in database.
+        /// </summary>
+        /// <param name="email"> Email. </param>
+        /// <returns> True, if email exist, false - if not. </returns>
         public bool IsEmailExist(string email)
         {
             if (_db.UsersRepo.GetByEmail(email) == null)
@@ -211,6 +276,12 @@ namespace TaskManager.BL.Services
             }
         }
 
+        /// <summary>
+        /// Check if password is correct for user with current email.
+        /// </summary>
+        /// <param name="email"> User's email. </param>
+        /// <param name="password"> Password. </param>
+        /// <returns> True if password is the same, else - false. </returns>
         public bool IsPasswordValid(string email, string password)
         {
             if (IsEmailExist(email))
