@@ -2,8 +2,14 @@
 
 namespace TaskManager.PL.ConsoleInterface.ButtonsInterface
 {
+    /// <summary>
+    /// Defines console page to show lists of items.
+    /// </summary>
     public class ListView : Page
     {
+        /// <summary>
+        /// Init all elements of page, sseparated with specific blankline.
+        /// </summary>
         public override void Init()
         {
             if (buttons != null)
@@ -44,7 +50,7 @@ namespace TaskManager.PL.ConsoleInterface.ButtonsInterface
                 }
                 else if (key == ConsoleKey.Enter)
                 {
-                    RunSelectedButton();
+                    PressSelectedButton();
                     break;
                 }
             }
