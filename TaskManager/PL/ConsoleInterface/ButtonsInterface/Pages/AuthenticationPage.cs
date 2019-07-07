@@ -12,11 +12,11 @@ namespace TaskManager.PL.ConsoleInterface.ButtonsInterface.Pages
         {
             _provider = new TaskManagerProvider();
             buttons.Add(new Button { Content = "Login", ButtonAction = LogIn });
-            buttons.Add(new Button { Content = "Registration", ButtonAction = Registeration });
+            buttons.Add(new Button { Content = "Registration", ButtonAction = Registration });
             buttons.Add(new Button { Content = "Exit", ButtonAction = Exit });
         }
 
-        public void LogIn() //todo class login
+        public void LogIn()
         {
             while (true)
             {
@@ -41,18 +41,17 @@ namespace TaskManager.PL.ConsoleInterface.ButtonsInterface.Pages
                     }
                     else
                     {
-                        // todo
-                        ShowErrorMessage("Uncorrect password, pres any key to try again");
+                        ShowErrorMessage("Uncorrect password, press any key to try again");
                         Console.ReadKey();
                     }
                 }
                 else
                 {
-                    ShowErrorMessage("User with this email not found, press (0) to go to previous page, \npressany any other key try again");
-                    if (Console.ReadLine() != "0")
+                    ShowErrorMessage("User with this email not found, press 0 to go to previous page, pressany any other key try again");
+                    if (Console.ReadKey().Key == ConsoleKey.D0)
                     {
                         Console.Clear();
-                        LogIn();
+                        this.Init();
                         break;
                     }
 
@@ -62,7 +61,7 @@ namespace TaskManager.PL.ConsoleInterface.ButtonsInterface.Pages
 
         }
 
-        public void Registeration()
+        public void Registration()
         {
             while (true)
             {

@@ -78,17 +78,7 @@ namespace TaskManager.PL.ConsoleInterface.ButtonsInterface
             Console.ForegroundColor = _foregroundColor;
             Console.BackgroundColor = _backgroundColor;
 
-            int i = 0;
-            foreach (char c in Content)
-            {
-                Console.Write(c);
-                i += 1;
-                if (i == Constants.ConsoleWidth)
-                {
-                    i = 0;
-                    Console.WriteLine();
-                }
-            }
+            Console.Write(Content);
 
             Console.BackgroundColor = ConsoleColor.White;
             Console.ForegroundColor = ConsoleColor.Black;

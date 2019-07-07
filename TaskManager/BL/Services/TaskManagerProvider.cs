@@ -85,9 +85,9 @@ namespace TaskManager.BL.Services
         {
             List<GroupDTO> groups = new List<GroupDTO>();
 
-            User userInfo = _db.UsersRepo.GetByKey(user.Id);
+            IEnumerable<UserGroup> userGroups = _db.UserGroupsRepo.Get(ug => ug.UserId == user.Id);
 
-            foreach (UserGroup userGroup in userInfo.UserGroups)
+            foreach (UserGroup userGroup in userGroups)
             {
                 groups.Add(ConvertToDTO(userGroup.Group));
             }
@@ -138,12 +138,25 @@ namespace TaskManager.BL.Services
             _db.SaveChanges();
         }
 
-        public void AddNewGroup(GroupDTO group)
+        public void AddNewGroup(GroupDTO group, UserDTO user)
         {
             _db.GroupsRepo.Add(new Group
             {
                 Title = group.Title
             });
+            _db.SaveChanges();
+
+            foreach (Group g in _db.GroupsRepo.Get(g => g.Title == group.Title))
+            {
+                group.Id = g.Id;
+            }
+
+            _db.UserGroupsRepo.Add(new UserGroup
+            {
+                UserId = user.Id,
+                GroupId = group.Id
+            });
+
             _db.SaveChanges();
         }
 
@@ -169,7 +182,13 @@ namespace TaskManager.BL.Services
 
         #endregion
 
-        public void MarkTaskAsDone(ref TaskDTO taskDTO)
+        public void DeleteUserFromGroup(UserDTO user, GroupDTO group)
+        {
+            _db.UserGroupsRepo.DeleteRange(_db.UserGroupsRepo.Get(ug => ug.UserId == user.Id && ug.GroupId == group.Id));
+            _db.SaveChanges();
+        }
+
+        public void MarkTaskAsDone(TaskDTO taskDTO)
         {
             taskDTO.IsDone = true;
 

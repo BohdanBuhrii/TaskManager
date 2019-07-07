@@ -69,13 +69,17 @@ namespace TaskManager.PL.ConsoleInterface.ButtonsInterface.Pages
 
             ShowSuccessMessage("Group created successfully, press any key to continue");
 
-            buttons.Insert(buttons.Count-2, new Button
+            buttons[CurrentPosition].ToUsual();
+
+            buttons.Insert(buttons.Count - 2, new Button
             {
                 Content = $"{newGroup.Title} \n {newGroup.NumberOfUnresolvedTasks} unresolved tasks",
                 ButtonAction = ShowGroup
             });
+            _groups.Add(newGroup);
 
-            //RemoveButton("No groups");
+            RemoveButton("No groups");
+            _currentPosition = 0;
 
             Console.ReadKey();
             this.Init();
@@ -89,7 +93,7 @@ namespace TaskManager.PL.ConsoleInterface.ButtonsInterface.Pages
 
         public void ShowGroup()
         {
-            GroupPage groupPage = new GroupPage(_groups[_currentPosition], _user);
+            GroupPage groupPage = new GroupPage(_groups[CurrentPosition], _user);
             groupPage.Init();
         }
     }

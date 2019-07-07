@@ -8,7 +8,7 @@ namespace TaskManager.PL.ConsoleInterface
     {
         public static int ConsoleWidth
         {
-            get { return 40; }
+            get { return 50; }
         }
 
         public static char HorizontalSeparator
