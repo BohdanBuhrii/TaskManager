@@ -105,7 +105,7 @@ namespace TaskManager.PL.ConsoleInterface.ButtonsInterface.Pages
                             ShowSuccessMessage("User created successfully!\nPress any key to start work!");
                             Console.ReadLine();
                             Console.Clear();
-                            MainMenuPage mainMenuPage = new MainMenuPage(user); 
+                            MainMenuPage mainMenuPage = new MainMenuPage(user);
                             mainMenuPage.Init();
                             break;
                         }
@@ -115,12 +115,8 @@ namespace TaskManager.PL.ConsoleInterface.ButtonsInterface.Pages
                             Console.Clear();
                             ShowErrorMessage("You enter different passwords, try again");
                         }
-
-
                     }
                 }
-
-
             }
         }
     }

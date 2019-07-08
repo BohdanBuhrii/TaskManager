@@ -32,7 +32,7 @@ namespace TaskManager.BL.Services
             {
                 if (x.IsDone == y.IsDone)
                 {
-                    return x.PublicationDate.CompareTo(y.PublicationDate);
+                    return -x.PublicationDate.CompareTo(y.PublicationDate);
                 }
                 else if (!x.IsDone)
                 {
