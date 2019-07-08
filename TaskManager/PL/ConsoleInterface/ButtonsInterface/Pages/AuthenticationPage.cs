@@ -102,8 +102,7 @@ namespace TaskManager.PL.ConsoleInterface.ButtonsInterface.Pages
                         if (password == confirmPassword)
                         {
                             _provider.AddNewUser(user, password);
-                            Console.WriteLine("User created successfully!");
-                            Console.WriteLine("Press any key to start work!");
+                            ShowSuccessMessage("User created successfully!\nPress any key to start work!");
                             Console.ReadLine();
                             Console.Clear();
                             MainMenuPage mainMenuPage = new MainMenuPage(user); 

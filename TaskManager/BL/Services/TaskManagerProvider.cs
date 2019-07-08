@@ -171,6 +171,8 @@ namespace TaskManager.BL.Services
                 Name = user.Name
             });
             _db.SaveChanges();
+
+            user.Id = _db.UsersRepo.GetByEmail(user.Email).Id;
         }
 
         /// <summary>
