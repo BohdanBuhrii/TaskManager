@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace TaskManager.PL.ConsoleInterface
+﻿namespace TaskManager.PL.ConsoleInterface
 {
     public static class Constants
     {

@@ -63,7 +63,8 @@ namespace TaskManager.PL.ConsoleInterface.ButtonsInterface.Pages
 
         public void Registration()
         {
-            while (true)
+            bool val = true;
+            while (val)
             {
                 Console.Clear();
 
@@ -107,6 +108,7 @@ namespace TaskManager.PL.ConsoleInterface.ButtonsInterface.Pages
                             Console.Clear();
                             MainMenuPage mainMenuPage = new MainMenuPage(user);
                             mainMenuPage.Init();
+                            val = false;
                             break;
                         }
                         else
