@@ -242,7 +242,11 @@ namespace TaskManager.BL.Services
         /// <param name="group"> Group. </param>
         public void DeleteUserFromGroup(UserDTO user, GroupDTO group)
         {
-            _db.UserGroupsRepo.DeleteRange(_db.UserGroupsRepo.Get(ug => ug.UserId == user.Id && ug.GroupId == group.Id));
+            foreach (UserGroup ug in _db.UserGroupsRepo.Get(ug => ug.UserId == user.Id && ug.GroupId == group.Id))
+            {
+                _db.UserGroupsRepo.Delete(ug);
+            }
+            
             _db.SaveChanges();
         }
 

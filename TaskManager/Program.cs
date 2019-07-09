@@ -6,8 +6,8 @@ namespace TaskManager
     {
         public static void Main(string[] args)
         {
-            AuthenticationPage login = new AuthenticationPage();
-            login.Init();
+            AuthenticationPage authentication = new AuthenticationPage();
+            authentication.Init();
         }
     }
 }
